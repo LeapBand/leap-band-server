@@ -14,7 +14,11 @@ let clients = {};
 io.on('connection', function(socket) {
 	socket.on('update_member', function(data) {
 		clients[socket.id] = data;
-		socket.emit('member_updated', clients[socket.id]);
+		socket.emit('member_updated', {
+			'id': socket.id,
+			'data': clients[socket.id]
+		});
+
 		console.log(`Client ${socket.id} changed:`);
 		console.log(data);
 	});
