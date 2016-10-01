@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io('http://130.85.245.80:3000');
+var socket = io('http://localhost:3000');
 // var Mousetrap = require('mousetrap');
 
 // Mousetrap.bind('p', () => {

@@ -14,7 +14,7 @@ let clients = {};
 io.on('connection', function(socket) {
 	socket.on('update_member', function(data) {
 		clients[socket.id] = data;
-		socket.emit('members_updated', clients);
+		socket.emit('member_updated', clients[socket.id]);
 		console.log(`Client ${socket.id} changed:`);
 		console.log(data);
 	});
@@ -29,7 +29,7 @@ io.on('connection', function(socket) {
 		// Remove client
 		console.log(`Client ${clients[socket.id].username} disconnected.`);
 		delete clients[socket.id];
-		socket.emit('members_updated', clients);
+		socket.emit('member_left', socket.id);
 	});
 });
 
