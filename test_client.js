@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io('http://localhost:3000');
+var socket = io('http://130.85.245.80:3000');
 // var Mousetrap = require('mousetrap');
 
 // Mousetrap.bind('p', () => {
@@ -19,13 +19,17 @@ socket.emit('update_member', {
 	instrument: 'drums'
 });
 
-console.log(`Sending...`);
-let start = Date.now();
-socket.emit('play', {
-	frequency: 500
-});
+let start = 0;
+setTimeout(function() {
+	console.log(`Sending...`);
+	start = Date.now();
+	socket.emit('play', {
+		frequency: 500
+	});
+}, 1000);
 
 socket.on('play', function(data) {
 	let elapsedTime = Date.now() - start;
 	console.log(`Received from ${data.id} in ${elapsedTime} ms.`);
+	socket.disconnect();
 });
