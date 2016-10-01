@@ -25,7 +25,10 @@ io.on('connection', function(socket) {
 
 	socket.on('play', function(data) {
 		data.username = clients[socket.id].username;
-		io.emit('play', data);
+		io.emit('play', {
+			'id': socket.id,
+			'data': data
+		});
 		console.log(data);
 	});
 
