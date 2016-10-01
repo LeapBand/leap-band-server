@@ -12,9 +12,6 @@ let clients = {};
 */
 
 io.on('connection', function(socket) {
-	// Add client
-	// socket.emit('test', {message: `Hello client ${socket.id}!!!`});
-
 	socket.on('update_member', function(data) {
 		clients[socket.id] = data;
 		socket.emit('members_updated', clients);
@@ -25,13 +22,14 @@ io.on('connection', function(socket) {
 	socket.on('play', function(data) {
 		data.id = socket.id;
 		io.emit('play', data);
+		console.log(data);
 	});
 
 	socket.on('disconnect', function() {
 		// Remove client
+		console.log(`Client ${clients[socket.id].username} disconnected.`);
 		delete clients[socket.id];
 		socket.emit('members_updated', clients);
-		console.log(`Client ${socket.id} disconnected.`);
 	});
 });
 

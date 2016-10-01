@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/LeapBand/leap-band-server#readme",
   "dependencies": {
+    "mousetrap": "^1.6.0",
     "socket.io": "^1.4.8"
   }
 }
