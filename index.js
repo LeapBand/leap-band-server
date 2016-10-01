@@ -15,12 +15,12 @@ io.on('connection', function(socket) {
 	socket.on('update_member', function(data) {
 		clients[socket.id] = data;
 		socket.emit('members_updated', clients);
-		console.log('Client ${socket.id} changed:');
+		console.log(`Client ${socket.id} changed:`);
 		console.log(data);
 	});
 
 	socket.on('play', function(data) {
-		data.id = socket.id;
+		data.username = clients[socket.id].username;
 		io.emit('play', data);
 		console.log(data);
 	});

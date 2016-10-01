@@ -19,14 +19,13 @@ socket.emit('update_member', {
 	instrument: 'drums'
 });
 
-for (let i = 0; i < 10; ++i) {
-	console.log(`Sending ${i}...`);
-	socket.emit('play', {
-		frequency: 500,
-		i: i
-	});
-}
+console.log(`Sending...`);
+let start = Date.now();
+socket.emit('play', {
+	frequency: 500
+});
 
 socket.on('play', function(data) {
-	console.log(`Received ${data.i}.`);
+	let elapsedTime = Date.now() - start;
+	console.log(`Received from ${data.id} in ${elapsedTime} ms.`);
 });
