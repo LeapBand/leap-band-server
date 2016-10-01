@@ -12,29 +12,28 @@ let clients = {};
 */
 
 io.on('connection', function(socket) {
-	socket.on('update_member', function(data) {
-		clients[socket.id] = data;
+	socket.on('update_member', function(clientData) {
+		clients[socket.id] = clientData;
 		socket.emit('member_updated', {
 			'id': socket.id,
 			'data': clients[socket.id]
 		});
 
 		console.log(`Client ${socket.id} changed:`);
-		console.log(data);
+		console.log(clientData);
 	});
 
-	socket.on('play', function(data) {
-		data.username = clients[socket.id].username;
+	socket.on('play', function(instrumentData) {
 		io.emit('play', {
 			'id': socket.id,
-			'data': data
+			'data': instrumentData
 		});
-		console.log(data);
+		console.log(instrumentData);
 	});
 
 	socket.on('disconnect', function() {
 		// Remove client
-		console.log(`Client ${clients[socket.id].username} disconnected.`);
+		console.log(`Client ${socket.id} disconnected.`);
 		delete clients[socket.id];
 		socket.emit('member_left', socket.id);
 	});
