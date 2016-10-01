@@ -30,6 +30,6 @@ setTimeout(function() {
 
 socket.on('play', function(data) {
 	let elapsedTime = Date.now() - start;
-	console.log(`Received from ${data.id} in ${elapsedTime} ms.`);
+	console.log(`Received from ${data.username} in ${elapsedTime} ms.`);
 	socket.disconnect();
 });
