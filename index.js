@@ -12,9 +12,26 @@ let clients = {};
 */
 
 io.on('connection', function(socket) {
+	// socket.on('join', function(clientData) {
+	// 	clients[socket.id] = clientData;
+	// 	socket.emit('members', {
+	// 		'id': socket.id,
+	// 		'clients': clients
+	// 	});
+
+	// 	console.log(`Client ${socket.id} changed:`);
+	// 	console.log(clientData);
+	// });
+
 	socket.on('update_member', function(clientData) {
+		let existingMember = (socket.id in clients);
+
 		clients[socket.id] = clientData;
-		socket.emit('member_updated', {
+		if (!existingMember) {
+			socket.emit('initialize', clients);
+		}
+
+		io.emit('member_updated', {
 			'id': socket.id,
 			'data': clients[socket.id]
 		});
@@ -35,7 +52,9 @@ io.on('connection', function(socket) {
 		// Remove client
 		console.log(`Client ${socket.id} disconnected.`);
 		delete clients[socket.id];
-		socket.emit('member_left', socket.id);
+		socket.emit('member_left', {
+			'id': socket.id
+		});
 	});
 });
 
