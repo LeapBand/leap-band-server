@@ -48,7 +48,7 @@ io.on('connection', function(socket) {
 			'id': socket.id,
 			'data': instrumentData
 		});
-		console.log(instrumentData);
+		// console.log(instrumentData);
 	});
 
 	socket.on('disconnect', function() {
