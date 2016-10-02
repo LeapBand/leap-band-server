@@ -28,7 +28,10 @@ io.on('connection', function(socket) {
 
 		clients[socket.id] = clientData;
 		if (!existingMember) {
-			socket.emit('initialize', clients);
+			socket.emit('initialize', {
+				'myId': socket.id,
+				'clients': clients
+			});
 		}
 
 		io.emit('member_updated', {
